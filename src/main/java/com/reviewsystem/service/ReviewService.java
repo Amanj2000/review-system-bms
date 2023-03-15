@@ -3,6 +3,7 @@ package com.reviewsystem.service;
 import com.reviewsystem.dto.ResponseDTO;
 import com.reviewsystem.dto.ReviewRequestDTO;
 import com.reviewsystem.dto.ReviewResponseDTO;
+import com.reviewsystem.exception.NotFoundException;
 import com.reviewsystem.helper.ReviewHelper;
 import com.reviewsystem.model.Movie;
 import com.reviewsystem.model.Review;
@@ -47,10 +48,10 @@ public class ReviewService {
 		return new ResponseDTO(String.format("review for movie %s added successfully", movie.getMovieName()));
 	}
 
-	public ResponseDTO editReview(int movieId, String userEmail, ReviewRequestDTO reviewRequestDTO) {
-		reviewHelper.canEdit(movieId, userEmail, reviewRequestDTO.getUserEmail());
+	public ResponseDTO editReview(int movieId, ReviewRequestDTO reviewRequestDTO) {
+		reviewHelper.canEdit(movieId, reviewRequestDTO.getUserEmail());
 
-		Review review = reviewHelper.getReview(movieId, userEmail);
+		Review review = reviewHelper.getReview(movieId, reviewRequestDTO.getUserEmail());
 		review.setReview(reviewRequestDTO.getReview());
 		reviewRepository.save(review);
 
@@ -58,6 +59,10 @@ public class ReviewService {
 	}
 
 	public ResponseDTO deleteReview(int movieId, String userEmail) {
+		Movie movie = reviewHelper.getMovie(movieId);
+		if(!reviewRepository.existsByUserEmailAndMovie(userEmail, movie))
+			throw new NotFoundException(String.format("user %s has not post a review yet", userEmail));
+
 		Review review = reviewHelper.getReview(movieId, userEmail);
 		reviewRepository.delete(review);
 		return new ResponseDTO(String.format("review for movie %s deleted successfully", review.getMovie().getMovieName()));
