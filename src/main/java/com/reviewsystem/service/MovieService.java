@@ -33,22 +33,22 @@ public class MovieService {
 	}
 
 	public ResponseDTO addMovie(MovieRequestDTO movieRequestDTO) {
-		movieHelper.canAdd(movieRequestDTO.getMovieId());
+		movieHelper.canAdd(movieRequestDTO.getId());
 
 		Movie movie = new Movie();
-		movie.setMovieId(movieRequestDTO.getMovieId());
-		movie.setMovieName(movieRequestDTO.getMovieName());
+		movie.setMovieId(movieRequestDTO.getId());
+		movie.setMovieName(movieRequestDTO.getTitle());
 		movieRepository.save(movie);
 
-		return new ResponseDTO(String.format("Movie %s added successfully", movieRequestDTO.getMovieName()));
+		return new ResponseDTO(String.format("Movie %s added successfully", movieRequestDTO.getTitle()));
 	}
 
 	public ResponseDTO updateMovie(int movieId, MovieRequestDTO movieRequestDTO) {
-		movieHelper.canUpdate(movieId, movieRequestDTO.getMovieId());
+		movieHelper.canUpdate(movieId, movieRequestDTO.getId());
 
 		Movie movie = movieHelper.getMovie(movieId);
-		movie.setMovieId(movieRequestDTO.getMovieId());
-		movie.setMovieName(movieRequestDTO.getMovieName());
+		movie.setMovieId(movieRequestDTO.getId());
+		movie.setMovieName(movieRequestDTO.getTitle());
 		movieRepository.save(movie);
 
 		return new ResponseDTO(String.format("Movie %s updated successfully", movie.getMovieName()));
