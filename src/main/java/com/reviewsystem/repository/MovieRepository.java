@@ -11,6 +11,4 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
 	boolean existsByMovieId(int movieId);
 
 	Optional<Movie> findByMovieId(int movieId);
-
-	void deleteByMovieId(int movieId);
 }
