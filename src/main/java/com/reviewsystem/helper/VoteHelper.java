@@ -39,7 +39,7 @@ public class VoteHelper {
 	public void canEdit(int movieId, String userEmail, int value, String bodyUserEmail) {
 		Movie movie = getMovie(movieId);
 		if(!voteRepository.existsByUserEmailAndMovie(userEmail, movie))
-			throw new NotFoundException("invalid userEmail");
+			throw new NotFoundException(String.format("user %s has not voted yet", userEmail));
 
 		if(value != -1 && value != 1)
 			throw new IllegalArgumentException("vote value should be -1 or 1");

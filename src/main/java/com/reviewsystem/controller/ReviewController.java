@@ -36,15 +36,16 @@ public class ReviewController {
 		return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 	}
 
-	@PutMapping
-	public ResponseEntity<?> editReview(@PathVariable int movieId, @Valid @RequestBody ReviewRequestDTO reviewRequestDTO) {
-		ResponseDTO responseDTO = reviewService.editReview(movieId, reviewRequestDTO);
+	@PutMapping("/{userEmail}")
+	public ResponseEntity<?> editReview(@PathVariable int movieId, @PathVariable String userEmail,
+	                                    @Valid @RequestBody ReviewRequestDTO reviewRequestDTO) {
+		ResponseDTO responseDTO = reviewService.editReview(movieId, userEmail, reviewRequestDTO);
 		return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 	}
 
-	@DeleteMapping
-	public ResponseEntity<?> deleteReview(@PathVariable int movieId, @RequestBody ReviewRequestDTO reviewRequestDTO) {
-		ResponseDTO responseDTO = reviewService.deleteReview(movieId, reviewRequestDTO.getUserEmail());
+	@DeleteMapping("/{userEmail}")
+	public ResponseEntity<?> deleteReview(@PathVariable int movieId, @PathVariable String userEmail) {
+		ResponseDTO responseDTO = reviewService.deleteReview(movieId, userEmail);
 		return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 	}
 }

@@ -33,9 +33,12 @@ public class ReviewHelper {
 			throw new IllegalArgumentException(String.format("user %s has already reviewed this movie", userEmail));
 	}
 
-	public void canEdit(int movieId, String userEmail) {
+	public void canEdit(int movieId, String userEmail, String bodyUserEmail) {
 		Movie movie = getMovie(movieId);
 		if(!reviewRepository.existsByUserEmailAndMovie(userEmail, movie))
 			throw new NotFoundException(String.format("user %s has not post a review yet", userEmail));
+
+		if(!userEmail.equals(bodyUserEmail)) // only for debugging
+			throw new IllegalArgumentException("url email does not match body email");
 	}
 }
