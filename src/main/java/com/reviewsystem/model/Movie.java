@@ -28,13 +28,18 @@ public class Movie {
 	@NotNull
 	private List<Review> reviews;
 
+	@NotNull
+	private List<Vote> votes;
+
 	public Movie() {
 		this.reviews = new ArrayList<>();
+		this.votes = new ArrayList<>();
 	}
 
 	public Movie(int movieId, String movieName) {
 		this.movieId = movieId;
 		this.movieName = movieName;
 		this.reviews = new ArrayList<>();
+		this.votes = new ArrayList<>();
 	}
 }

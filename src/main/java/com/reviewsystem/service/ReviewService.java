@@ -62,6 +62,7 @@ public class ReviewService {
 	}
 
 	public ResponseDTO deleteReview(int movieId, String userEmail) {
+		reviewHelper.getReview(movieId, userEmail);
 		Movie movie = reviewHelper.getMovie(movieId);
 		movie.getReviews().removeIf(review -> review.getUserEmail().equals(userEmail));
 		movieRepository.save(movie);

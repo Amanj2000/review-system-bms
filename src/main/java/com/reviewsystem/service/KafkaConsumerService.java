@@ -12,7 +12,8 @@ public class KafkaConsumerService {
 	@Autowired
 	private MovieService movieService;
 
-	@KafkaListener(topics = "movies", groupId = "review-movie-consumer-group", containerFactory = "movieListenerContainerFactory")
+	@KafkaListener(topics = "movies", groupId = "review-movie-consumer-group", containerFactory =
+			"movieListenerContainerFactory")
 	public void listenMovie(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String operation, MovieRequestDTO movieRequestDTO) {
 		switch (operation) {
 			case "add": movieService.addMovie(movieRequestDTO); break;
