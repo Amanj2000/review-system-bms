@@ -3,7 +3,6 @@ package com.reviewsystem.controller;
 import com.reviewsystem.dto.MovieRequestDTO;
 import com.reviewsystem.dto.MovieResponseDTO;
 import com.reviewsystem.dto.ResponseDTO;
-import com.reviewsystem.model.Movie;
 import com.reviewsystem.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -3,6 +3,7 @@ package com.reviewsystem.controller;
 import com.reviewsystem.dto.ResponseDTO;
 import com.reviewsystem.dto.VoteRequestDTO;
 import com.reviewsystem.service.VoteService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,17 @@ public class VoteController {
 	@GetMapping
 	public ResponseEntity<?> getVotes(@PathVariable int movieId) {
 		int votes = voteService.getVotes(movieId);
-		return new ResponseEntity<>("votes: " + votes, HttpStatus.OK);
+		JSONObject response = new JSONObject();
+		response.put("votes", votes);
+		return new ResponseEntity<>(response.toMap(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{userEmail}")
 	public ResponseEntity<?> getVoteForUser(@PathVariable int movieId, @PathVariable String userEmail) {
 		int voteValue = voteService.getVoteForUser(movieId, userEmail);
-		return new ResponseEntity<>("voteValue: " + voteValue, HttpStatus.OK);
+		JSONObject response = new JSONObject();
+		response.put("voteValue", voteValue);
+		return new ResponseEntity<>(response.toMap(), HttpStatus.OK);
 	}
 
 	@PostMapping
